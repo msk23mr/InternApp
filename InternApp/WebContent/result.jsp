@@ -4,10 +4,10 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Index JSP</title>
+	<title>Result JSP</title>
 </head>
 <body>
-	<h2>Index JSP</h2>
-	<p><a href="/InternApp/InternServlet">サーブレット</a></p>
+	<h2>Result JSP</h2>
+	<p>結果を表示します。</p>
 </body>
 </html>

@@ -10,7 +10,7 @@
 
 	<servlet>
 		<servlet-name>InternServlet</servlet-name>
-		<servlet-class>net.jincorporation.servlet.InternServlet</servlet-class>
+		<servlet-class>net.jincorporation.servlet.TableServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

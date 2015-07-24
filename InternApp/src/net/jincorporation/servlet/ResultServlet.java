@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,6 @@ import net.jincorporation.data.DataAccess;
 /**
  * Servlet implementation class CalServlet
  */
-@WebServlet("/CalServlet")
 public class ResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -48,34 +46,40 @@ public class ResultServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 
+		// データアクセスオブジェクトの生成
 		DataAccess da = new DataAccess();
-		int itemCount;
+		// 総額
 		int amount = 0;
 
-		Map itemMap = request.getParameterMap();
-		Iterator it = itemMap.keySet().iterator();
+		// table.jspのフォーム入力値を取得
+		Map<String, String[]> itemMap = request.getParameterMap();
+		// itemMapのkey値を基にIteratorを生成
+		Iterator<String> it = itemMap.keySet().iterator();
+
 
 		while (it.hasNext()) {
-			String name = (String) it.next();
-			String[] values = (String[]) itemMap.get(name);
+			// 商品IDの取得
+			String id = (String) it.next();
+			// 数量の取得
+			String[] number = (String[]) itemMap.get(id);
 
-			if (name.equals("itemCount")) {
-				itemCount = Integer.parseInt(values[0]);
-			} else {
-				int price = da.getItem(name).getPrice();
-				amount += price * Integer.parseInt(values[0]);
-			}
+			// 商品価格の取得
+			int price = da.getItem(id).getPrice();
+			// (商品価格)×(数量)の合計
+			amount += price * Integer.parseInt(number[0]);
+
 		}
 
+		// 計算結果をresult.jspに渡す
 		request.setAttribute("amount", amount);
 
 		// サーブレットコンテキストを取得
 		ServletContext sc = getServletContext();
 
-		// 結果表示JSPのファイルパス
+		// result.jspへのパス
 		String resultPage = "/result.jsp";
 
-		// 結果表示JSPに遷移
+		// result.jspに遷移
 		sc.getRequestDispatcher(resultPage).forward(request, response);
 	}
 }

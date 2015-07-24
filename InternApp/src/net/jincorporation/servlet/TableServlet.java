@@ -31,6 +31,7 @@ public class TableServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		// データアクセスオブジェクトの生成
 		DataAccess da = new DataAccess();
 
 		// 商品リストをリクエストにセット
@@ -43,10 +44,10 @@ public class TableServlet extends HttpServlet {
 		// サーブレットコンテキストを取得
 		ServletContext sc = getServletContext();
 
-		// 商品一覧JSPのファイルパス
+		// table.jspのファイルパス
 		String tablePage = "/table.jsp";
 
-		// 結果表示JSPに遷移
+		// table.jspに遷移
 		sc.getRequestDispatcher(tablePage).forward(request, response);
 	}
 
